@@ -349,18 +349,19 @@ class Rest
         return json_decode($json);
     }
 
-
     /**
      * Returns all the tickets
      * @param int $page
      * @return null|\stdClass
      */
-    public function getAllTickets($page, $filterAll = false)
+    public function getAllTickets($page = 0, $filterAll = false)
     {
         $base = '/helpdesk/tickets.json?';
         if ($filterAll === true)
             $base .= 'filter_name=all_tickets&';
-        $base .= 'page='.$page;
+        if ($page != 0) {
+          $base .= 'page='.$page;
+        }
         $json = $this->restCall(
             $base,
             self::METHOD_GET
